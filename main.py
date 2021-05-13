@@ -1,3 +1,11 @@
+__author__ = "Jose Arturo Ramirez Perez"
+__credits__ = ["Jose Arturo Ramirez Perez"]
+__license__ = "GPL"
+__version__ = "1.0.1"
+__maintainer__ = "Jose Arturo Ramirez Perez"
+__email__ = "arturor19@gmail.com"
+__status__ = "Staging"
+
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI, HTTPException
