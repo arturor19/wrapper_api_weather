@@ -35,9 +35,9 @@ uvicorn main:app --reload
 
 ### Test server via OpenAPI
 
-```
-[text](http://127.0.0.1:8000/docs)
-```
+
+[OpenAPI](http://127.0.0.1:8000/docs)
+
 
 ![Test via OpenAPI](https://github.com/arturor19/wrapper_api_weather/blob/main/images/test_via_openapi.JPG)
 
