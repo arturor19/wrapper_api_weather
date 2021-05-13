@@ -33,3 +33,8 @@ pytest
 uvicorn main:app --reload
 ```
 
+### Test server via OpenAPI
+
+![Test via OpenAPI](https://github.com/arturor19/wrapper_api_weather/blob/main/images/test_via_openapi.JPG)
+
+
