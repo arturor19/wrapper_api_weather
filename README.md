@@ -20,13 +20,16 @@ cd wrapper_api_weather
 pip install -r requirements.txt
 ```
 
+### Run test
+
+```
+pytest
+```
+
+
 ### Run server
 
 ```
 uvicorn main:app --reload
 ```
 
-### Run test
-
-```
-pytest
