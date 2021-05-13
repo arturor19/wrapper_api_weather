@@ -5,10 +5,14 @@
 ## Clone the project
 
 ```
-git clone https://github.com/marciovrl/fastapi-example.git
+git clone git@github.com:arturor19/wrapper_api_weather.git
 ```
 
 ## Run local
+
+## Move to the wrapper_api_weather folder
+
+cd wrapper_api_weather
 
 ### Install dependencies
 
