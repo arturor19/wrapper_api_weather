@@ -8,8 +8,6 @@
 git clone git@github.com:arturor19/wrapper_api_weather.git
 ```
 
-## Run local
-
 ## Move to the wrapper_api_weather folder
 
 ```
