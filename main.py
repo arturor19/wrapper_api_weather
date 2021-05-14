@@ -140,16 +140,14 @@ async def get_weather(country: str, city: str):
                 dict_weather = GetWeather(city, country).human_readable_dict()
                 temp_file = open(cache_dir + city + "_" + country + ".pkl", "wb")
                 pickle.dump(dict_weather, temp_file)
-                print(dict_weather)
+                temp_file.close()
             else:
                 with open(cache_dir + dict_file, 'rb') as handle:
                     dict_weather = pickle.load(handle)
-                print(dict_weather)
         else:
             dict_weather = GetWeather(city, country).human_readable_dict()
             temp_file = open(cache_dir + city + "_" + country + ".pkl", "wb")
             pickle.dump(dict_weather, temp_file)
-            print(dict_weather)
         json_compatible_item_data = jsonable_encoder(dict_weather)
         resp = JSONResponse(content=json_compatible_item_data)
         #resp = Response(response=ret, status=200, mimetype="application/json")
