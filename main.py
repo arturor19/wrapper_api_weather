@@ -22,7 +22,7 @@ from beaufort_scale import beaufort_scale_ms
 import datetime
 
 app = FastAPI()
-cache_time = time.time() - 10
+cache_time = time.time() - 120
 
 if os.name == 'nt':
     cache_folder = "\cache\\"
