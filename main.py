@@ -1,17 +1,37 @@
+__author__ = "Jose Arturo Ramirez Perez"
+__credits__ = ["Jose Arturo Ramirez Perez"]
+__license__ = "GPL"
+__version__ = "1.0.2"
+__maintainer__ = "Jose Arturo Ramirez Perez"
+__email__ = "arturor19@gmail.com"
+__status__ = "Staging"
+
+
 from fastapi import FastAPI
+import os
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
 import json
+import time
+import pickle
 import requests
 import portolan
 import numpy as np
 from beaufort_scale import beaufort_scale_ms
 import datetime
-from fastapi_cache.decorator import cache
-
 
 app = FastAPI()
+cache_time = time.time() - 10
+
+if os.name == 'nt':
+    cache_folder = "\cache\\"
+else:
+    cache_folder = "/cache/"
+
+cwd = os.getcwd()
+cache_dir = (cwd + cache_folder)
+
 
 # Class to collect the information and transform it in human readable
 class GetWeather(object):
@@ -102,7 +122,7 @@ class GetWeather(object):
         }
         return self.hr_dict
 
-@cache(expire=120)
+
 @app.get('/weather')
 async def get_weather(country: str, city: str):
     """
@@ -111,7 +131,25 @@ async def get_weather(country: str, city: str):
     JSON : JSON with human readable weather details
     """
     try:
-        dict_weather = GetWeather(city, country).human_readable_dict()
+        dict_file = (city + "_" + country + ".pkl")
+        if os.path.isfile(cache_dir + dict_file):
+            st = os.stat(cache_dir + dict_file)
+            min_time = st.st_mtime
+            if min_time < cache_time:  ## Validate older than cache_time
+                os.remove(cache_dir + dict_file)
+                dict_weather = GetWeather(city, country).human_readable_dict()
+                temp_file = open(cache_dir + city + "_" + country + ".pkl", "wb")
+                pickle.dump(dict_weather, temp_file)
+                print(dict_weather)
+            else:
+                with open(cache_dir + dict_file, 'rb') as handle:
+                    dict_weather = pickle.load(handle)
+                print(dict_weather)
+        else:
+            dict_weather = GetWeather(city, country).human_readable_dict()
+            temp_file = open(cache_dir + city + "_" + country + ".pkl", "wb")
+            pickle.dump(dict_weather, temp_file)
+            print(dict_weather)
         json_compatible_item_data = jsonable_encoder(dict_weather)
         resp = JSONResponse(content=json_compatible_item_data)
         #resp = Response(response=ret, status=200, mimetype="application/json")
