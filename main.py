@@ -22,12 +22,12 @@ from beaufort_scale import beaufort_scale_ms
 import datetime
 
 app = FastAPI()
-cache_time = time.time() - 120
+
 
 if os.name == 'nt':
-    cache_folder = "\cache\\"
+    cache_folder = "\__pycache__\\"
 else:
-    cache_folder = "/cache/"
+    cache_folder = "/__pycache__/"
 
 cwd = os.getcwd()
 cache_dir = (cwd + cache_folder)
@@ -134,6 +134,7 @@ async def get_weather(country: str, city: str):
         dict_file = (city + "_" + country + ".pkl")
         if os.path.isfile(cache_dir + dict_file):
             st = os.stat(cache_dir + dict_file)
+            cache_time = time.time() - 120
             min_time = st.st_mtime
             if min_time < cache_time:  ## Validate older than cache_time
                 os.remove(cache_dir + dict_file)
@@ -150,7 +151,6 @@ async def get_weather(country: str, city: str):
             pickle.dump(dict_weather, temp_file)
         json_compatible_item_data = jsonable_encoder(dict_weather)
         resp = JSONResponse(content=json_compatible_item_data)
-        #resp = Response(response=ret, status=200, mimetype="application/json")
     except:
         dict_weather = {"id_code": 404, "description": "Please validate your entries"}
         json_compatible_item_data = jsonable_encoder(dict_weather)
