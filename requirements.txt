@@ -15,7 +15,7 @@ iniconfig==1.1.1
 itsdangerous==2.0.0
 Jinja2==3.0.0
 MarkupSafe==2.0.0
-numpy==1.20.3
+numpy==1.22.2
 packaging==20.9
 pluggy==0.13.1
 portolan==1.0.1
